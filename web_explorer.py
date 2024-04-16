@@ -37,7 +37,7 @@ def settings():
         vectorstore=vectorstore_public,
         llm=llm, 
         search=search, 
-        num_search_results=3
+        num_search_results=10
     )
 
     return web_retriever, llm
@@ -67,10 +67,7 @@ class PrintRetrievalHandler(BaseCallbackHandler):
             self.container.text(doc.page_content)
 
 
-st.sidebar.image("img/ai.png")
-st.header("`Interweb Explorer`")
-st.info("`I am an AI that can answer questions by exploring, reading, and summarizing web pages."
-    "I can be configured to use different modes: public API or private (no data sharing).`")
+st.info("`I am an AI that can tell if a news fact is true, input a link, and a fact from it, I will search the web put it in context and give you an answer")
 
 # Make retriever and llm
 if 'retriever' not in st.session_state:
@@ -79,7 +76,8 @@ web_retriever = st.session_state.retriever
 llm = st.session_state.llm
 
 # User input 
-question = st.text_input("`Ask a question:`")
+question = st.text_input("`Check a fact`")
+link = st.text_input("Enter the url")
 
 if question:
 
